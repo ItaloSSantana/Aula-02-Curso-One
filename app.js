@@ -1,6 +1,7 @@
 let tentativas = 1;
 let listaNumerosSorteados = [];
-let numeroSecreto = gerarNumeroAleatorio(5);
+let numeroLimitador = 5
+let numeroSecreto = gerarNumeroAleatorio(numeroLimitador);
 
 function exibirTextoNaTela (tag, texto) {
     let campo = document.querySelector(tag);
@@ -9,7 +10,7 @@ function exibirTextoNaTela (tag, texto) {
 
 function exibirMensagemInicial() {
     exibirTextoNaTela('h1','Jogo do Número Secreto');
-    exibirTextoNaTela('p','Escolha um número de 1 a 10');
+    exibirTextoNaTela('p',`Escolha um número de 1 a ${numeroLimitador}`);
 }
 
 exibirMensagemInicial();
@@ -33,10 +34,14 @@ function verificarChute() {
      limparCampo()
 }
 
-function gerarNumeroAleatorio(cap) {
-    let numeroSorteado = parseInt(Math.random() * cap + 1);
+function gerarNumeroAleatorio(numeroLimite) {
+    let numeroSorteado = parseInt(Math.random() * numeroLimite + 1);
+    let quantidadeNumerosLista = listaNumerosSorteados.length;
+    if (quantidadeNumerosLista == numeroLimite) {
+        listaNumerosSorteados = []
+    }
     if (listaNumerosSorteados.includes(numeroSorteado)) {
-       return gerarNumeroAleatorio(5);
+       return gerarNumeroAleatorio(numeroLimitador);
     } else {
         console.log(listaNumerosSorteados);
         listaNumerosSorteados.push(numeroSorteado);
@@ -50,7 +55,7 @@ function limparCampo() {
 }
 
 function novoJogoClicado() {
-    numeroSecreto = gerarNumeroAleatorio(5);
+    numeroSecreto = gerarNumeroAleatorio(numeroLimitador);
     limparCampo();
     tentativas = 1;
     exibirMensagemInicial();
