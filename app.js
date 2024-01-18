@@ -3,14 +3,17 @@ let listaNumerosSorteados = [];
 let numeroLimitador = 5
 let numeroSecreto = gerarNumeroAleatorio(numeroLimitador);
 
-function exibirTextoNaTela (tag, texto) {
+function exibirTextoNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    if (tag == 'p') {
+        responsiveVoice.speak(texto, 'Brazilian Portuguese Female', { rate: 1.2 });
+    }
 }
 
 function exibirMensagemInicial() {
-    exibirTextoNaTela('h1','Jogo do Número Secreto');
-    exibirTextoNaTela('p',`Escolha um número de 1 a ${numeroLimitador}`);
+    exibirTextoNaTela('h1', 'Jogo do Número Secreto');
+    exibirTextoNaTela('p', `Escolha um número de 1 a ${numeroLimitador}`);
 }
 
 exibirMensagemInicial();
@@ -20,18 +23,18 @@ function verificarChute() {
     if (chute == numeroSecreto) {
         let palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativas';
         let mensagemTentativa = `Você descobriu o número secreto em ${tentativas} ${palavraTentativa}!!!`;
-     exibirTextoNaTela('h1', 'ACERTOU!!!');
-     exibirTextoNaTela('p',mensagemTentativa);
-     document.getElementById('reiniciar').removeAttribute('disabled');
-     } else {
+        exibirTextoNaTela('h1', 'ACERTOU!!!');
+        exibirTextoNaTela('p', mensagemTentativa);
+        document.getElementById('reiniciar').removeAttribute('disabled');
+    } else {
         if (numeroSecreto > chute) {
             exibirTextoNaTela('p', `O número secreto é maior que ${chute}`);
         } else {
             exibirTextoNaTela('p', `O número secreto é menor que ${chute}`);
         }
         tentativas++;
-     }
-     limparCampo()
+    }
+    limparCampo()
 }
 
 function gerarNumeroAleatorio(numeroLimite) {
@@ -41,7 +44,7 @@ function gerarNumeroAleatorio(numeroLimite) {
         listaNumerosSorteados = []
     }
     if (listaNumerosSorteados.includes(numeroSorteado)) {
-       return gerarNumeroAleatorio(numeroLimitador);
+        return gerarNumeroAleatorio(numeroLimitador);
     } else {
         console.log(listaNumerosSorteados);
         listaNumerosSorteados.push(numeroSorteado);
@@ -59,5 +62,5 @@ function novoJogoClicado() {
     limparCampo();
     tentativas = 1;
     exibirMensagemInicial();
-    document.getElementById('reiniciar').setAttribute('disabled',true);
+    document.getElementById('reiniciar').setAttribute('disabled', true);
 }
