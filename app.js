@@ -1,6 +1,7 @@
-let numeroSecreto = gerarNumeroAleatorio(10);
 let tentativas = 1;
-    
+let listaNumerosSorteados = [];
+let numeroSecreto = gerarNumeroAleatorio(5);
+
 function exibirTextoNaTela (tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
@@ -33,7 +34,14 @@ function verificarChute() {
 }
 
 function gerarNumeroAleatorio(cap) {
-    return parseInt(Math.random() * cap + 1);
+    let numeroSorteado = parseInt(Math.random() * cap + 1);
+    if (listaNumerosSorteados.includes(numeroSorteado)) {
+       return gerarNumeroAleatorio(5);
+    } else {
+        console.log(listaNumerosSorteados);
+        listaNumerosSorteados.push(numeroSorteado);
+        return numeroSorteado;
+    }
 }
 
 function limparCampo() {
@@ -42,7 +50,7 @@ function limparCampo() {
 }
 
 function novoJogoClicado() {
-    numeroSecreto = gerarNumeroAleatorio(10);
+    numeroSecreto = gerarNumeroAleatorio(5);
     limparCampo();
     tentativas = 1;
     exibirMensagemInicial();
